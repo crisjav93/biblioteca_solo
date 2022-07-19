@@ -66,15 +66,15 @@ def ingreso_libros(request):
     return render(request,'app_biblioteca/ingreso_libros.html', {'formulario':form})
 
 def busqueda_libro(request):
-    return render(request, 'app_biblioteca/buscar_libro.html')
+    return render(request, 'app_biblioteca/resultado_libro.html')
 
 def buscar_libro(request):
     if request.GET['codigo']:
         cod= request.GET['codigo']
         codigo = Libro.objects.filter(codigo=cod) 
-        return render(request,'app_biblioteca/resultado_libro.html', {'codigo':codigo})
+        return render(request,'app_biblioteca/buscar_libro.html', {'codigo':codigo})
     else:
-        return render(request,'app_biblioteca/buscar_libro.html', {'error':'No se ingreso ninguna comision'})
+        return render(request,'app_biblioteca/resultado_libro.html', {'error':'No se ingreso ninguna comision'})
 
 
 

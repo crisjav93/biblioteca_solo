@@ -11,7 +11,7 @@ urlpatterns = [
     path('ingreso_encargados/',ingreso_encargados, name='ingreso_encargados'),
     path('ingreso_socios/', ingreso_socios, name = 'ingreso_socios'),
     path('ingreso_libros/', ingreso_libros, name='ingreso_libros'),
-    path('resultado_libro/', busqueda_libro, name = 'resultado_libro'),
-    path('buscar_libro/', buscar_libro, name='buscar_libro'),
+    path('buscar_libro/', busqueda_libro, name = 'buscar_libro'),
+    path('resultado_libro/', buscar_libro, name='resultado_libro'),
         
 ]
