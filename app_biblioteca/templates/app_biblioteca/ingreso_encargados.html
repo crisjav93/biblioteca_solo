@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Ingreso de Encargados</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    <h1>Ingreso de Encargados</h1>
+
+    {% if formulario.errors %}
+    <p style="color:red">"HAY ALGO MAL"</p>
+    {% endif %}
+
+    <form action="{% url 'ingreso_encargados'%}" method="POST"> {% csrf_token %}
+
+        <table>
+            {{ formulario.as_table }}
+        </table>
+
+        <input type="submit" value="Enviar">
+
+    </form>
+    
+</body>
+</html>
