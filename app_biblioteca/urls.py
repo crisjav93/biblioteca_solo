@@ -13,5 +13,9 @@ urlpatterns = [
     path('ingreso_libros/', ingreso_libros, name='ingreso_libros'),
     path('buscar_libro/', busqueda_libro, name = 'buscar_libro'),
     path('resultado_libro/', buscar_libro, name='resultado_libro'),
+    path('buscar_socio/', busqueda_socio, name = 'buscar_socio'),
+    path('resultado_socio/', buscar_socio, name='resultado_socio'),
+    path('buscar_encargado/', busqueda_encargado, name = 'buscar_encargado'),
+    path('resultado_encargado/', buscar_encargado, name='resultado_encargado'),
         
 ]

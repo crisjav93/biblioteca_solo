@@ -74,7 +74,29 @@ def buscar_libro(request):
         codigo = Libro.objects.filter(codigo=cod) 
         return render(request,'app_biblioteca/buscar_libro.html', {'codigo':codigo})
     else:
-        return render(request,'app_biblioteca/resultado_libro.html', {'error':'No se ingreso ninguna comision'})
+        return render(request,'app_biblioteca/resultado_libro.html', {'error':'No se ingreso ningun libro'})
+
+def busqueda_socio(request):
+    return render(request, 'app_biblioteca/resultado_socio.html')
+
+def buscar_socio(request):
+    if request.GET['num_socio']:
+        num_soc= request.GET['num_socio']
+        num_socio = Socio.objects.filter(num_socio=num_soc) 
+        return render(request,'app_biblioteca/buscar_socio.html', {'num_socio':num_socio})
+    else:
+        return render(request,'app_biblioteca/resultado_socio.html', {'error':'No se ingreso ningun socio'})
+
+def busqueda_encargado(request):
+    return render(request, 'app_biblioteca/resultado_encargado.html')
+
+def buscar_encargado(request):
+    if request.GET['codigo']:
+        cod= request.GET['codigo']
+        codigo = Encargado.objects.filter(codigo=cod) 
+        return render(request,'app_biblioteca/buscar_encargado.html', {'codigo':codigo})
+    else:
+        return render(request,'app_biblioteca/resultado_encargado.html', {'error':'No se ingreso ningun socio'})
 
 
 
