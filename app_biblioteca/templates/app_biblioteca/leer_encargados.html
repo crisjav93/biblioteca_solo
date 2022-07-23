@@ -1,0 +1,14 @@
+{% extends 'app_biblioteca/encargados.html' %}
+
+{% load static %}
+
+{% block contenido_que_cambia %}
+    <h1>Encargados</h1>
+
+{% for encargado in encargados %}
+    
+    <li>{{ encargado }}</li>
+
+{% endfor %}
+
+{% endblock %}

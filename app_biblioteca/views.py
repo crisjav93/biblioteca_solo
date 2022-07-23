@@ -98,7 +98,7 @@ def buscar_encargado(request):
     else:
         return render(request,'app_biblioteca/resultado_encargado.html', {'error':'No se ingreso ningun socio'})
 
-
-
-
+def leer_encargados(request):
+    encargados = Encargado.objects.all()
+    return render(request, 'app_biblioteca/leer_encargados.html',{'encargados':encargados})
 

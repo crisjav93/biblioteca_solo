@@ -17,5 +17,6 @@ urlpatterns = [
     path('resultado_socio/', buscar_socio, name='resultado_socio'),
     path('buscar_encargado/', busqueda_encargado, name = 'buscar_encargado'),
     path('resultado_encargado/', buscar_encargado, name='resultado_encargado'),
+    path('leer_encargados/', leer_encargados, name= 'leer_encargados'),
         
 ]
