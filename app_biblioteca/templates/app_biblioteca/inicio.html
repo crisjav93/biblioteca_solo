@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Landing Page - Start Bootstrap Theme</title>
+        <title>Bienvenidos biblioteca virtual</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -30,7 +30,7 @@
             </div>
         </nav>
         <!-- Masthead-->
-        <header class="masthead">
+        <header class="masthead"style="background-image: url({% static 'app_biblioteca/assets/img/biblioteca.jpg' %})">
             <div class="container position-relative">
                 <div class="row justify-content-center">
                     <div class="col-xl-6">
@@ -43,7 +43,9 @@
                 </div>
             </div>
         </header>
-
+        {% block contenido_que_cambia %}
+         
+        {% endblock %}
     
 
 
