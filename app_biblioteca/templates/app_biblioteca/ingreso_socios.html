@@ -1,27 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Ingreso de Encargados</title>
-</head>
+{% extends 'app_biblioteca/inicio.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h2>Portal de Socios</h2>
+{% endblock %}
+
 <body>
-    <h1>Ingreso de Socios</h1>
+{% block contenido_que_cambia %}
 
-    {% if formulario.errors %}
-    <p style="color:red">"HAY ALGO MAL"</p>
-    {% endif %}
+<h1>Ingreso de Socios</h1>
 
-    <form action="{% url 'ingreso_socios'%}" method="POST"> {% csrf_token %}
+{% if formulario.errors %}
+<p style="color:red">"HAY ALGO MAL"</p>
+{% endif %}
 
-        <table>
-            {{ formulario.as_table }}
-        </table>
+<form action="{% url 'ingreso_socios'%}" method="POST"> {% csrf_token %}
 
-        <input type="submit" value="Enviar">
+    <table>
+        {{ formulario.as_table }}
+    </table>
 
-    </form>
-    
+    <input type="submit" value="Enviar">
+
+</form>
+
 </body>
-</html>
+{% endblock %}

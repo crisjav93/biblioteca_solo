@@ -102,3 +102,10 @@ def leer_encargados(request):
     encargados = Encargado.objects.all()
     return render(request, 'app_biblioteca/leer_encargados.html',{'encargados':encargados})
 
+def leer_libros(request):
+    libros = Libro.objects.all()
+    return render(request, 'app_biblioteca/leer_libros.html',{'libros':libros})
+
+def leer_socios(request):
+    socios = Socio.objects.all()
+    return render(request, 'app_biblioteca/leer_socios.html',{'socios':socios})

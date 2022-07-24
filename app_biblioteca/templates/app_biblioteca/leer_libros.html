@@ -1,0 +1,20 @@
+{% extends 'app_biblioteca/inicio.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h2>Biblioteca</h2>
+{% endblock %}
+
+<body>
+{% block contenido_que_cambia %}
+<h2>Nuestros Libros</h2>
+
+{% for libro in libros %}
+    <li>{{ libro }}</li>
+{% endfor %}
+
+<a href="{% url 'ingreso_libros' %}">agregar un nuevo libro</a>
+
+</body>
+{% endblock %}

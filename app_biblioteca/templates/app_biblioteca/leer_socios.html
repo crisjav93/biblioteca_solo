@@ -6,7 +6,14 @@
 <h2>Portal de Socios</h2>
 {% endblock %}
 
+<body>
 {% block contenido_que_cambia %}
+    {% for socio in socios %}
+        <li>{{ socio }}</li>
+    {% endfor %}
 
 
+<a href="{% url 'ingreso_socios' %}">agregar nuevo Socio</a>
+
+</body>
 {% endblock %}
