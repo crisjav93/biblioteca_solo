@@ -12,7 +12,15 @@
 
 {% for libro in libros %}
     <li>{{ libro }}</li>
+    <button>
+        <a href="{% url 'eliminar_libro' libro.codigo %}">Eliminar</a>
+    </button>
+
 {% endfor %}
+
+<br>
+</br>
+
 
 <a href="{% url 'ingreso_libros' %}">agregar un nuevo libro</a>
 

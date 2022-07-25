@@ -12,10 +12,16 @@
     
     {% for encargado in encargados %}
     
-    <li>{{ encargado }}</li>
+        <li>{{ encargado }}</li>
+        <button>
+            <a href="{% url 'eliminar_encargado' encargado.codigo %}">Eliminar</a>
+        </button>
 
     {% endfor %}    
 
+    <br>
+
+    </br>
 <a href="{% url 'ingreso_encargados' %}">agregar encargado</a>
     
 </body> 

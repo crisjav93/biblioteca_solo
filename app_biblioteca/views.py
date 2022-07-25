@@ -109,3 +109,22 @@ def leer_libros(request):
 def leer_socios(request):
     socios = Socio.objects.all()
     return render(request, 'app_biblioteca/leer_socios.html',{'socios':socios})
+
+
+def eliminar_encargado(request, codigo_encargado):
+    encargado = Encargado.objects.get(codigo=codigo_encargado) #trae por cod.
+    encargado.delete()
+    encargados = Encargado.objects.all()
+    return render(request, 'app_biblioteca/leer_encargados.html',{'encargados':encargados})
+
+def eliminar_libro(request, codigo_libro):
+    libro = Libro.objects.get(codigo=codigo_libro)
+    libro.delete()
+    libros = Libro.objects.all()
+    return render(request, 'app_biblioteca/leer_libros.html',{'libros':libros})
+
+def eliminar_socio(request, num_soc):
+    socio = Socio.objects.get(num_socio=num_soc)
+    socio.delete()
+    socios = Socio.objects.all()
+    return render(request, 'app_biblioteca/leer_socios.html',{'socios':socios})

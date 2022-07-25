@@ -20,5 +20,8 @@ urlpatterns = [
     path('leer_encargados/',leer_encargados, name='leer_encargados'),
     path('leer_libros/', leer_libros, name='leer_libros'),
     path('leer_socios/', leer_socios, name = 'leer_socios'),
-        
+    path('eliminar_encargado/<codigo_encargado>', eliminar_encargado, name='eliminar_encargado'),
+    path('eliminar_libro/<codigo_libro>', eliminar_libro, name='eliminar_libro'),
+    path('eliminar_socio/<num_soc>', eliminar_socio, name='eliminar_socio'),
+
 ]
