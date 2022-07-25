@@ -23,5 +23,9 @@ urlpatterns = [
     path('eliminar_encargado/<codigo_encargado>', eliminar_encargado, name='eliminar_encargado'),
     path('eliminar_libro/<codigo_libro>', eliminar_libro, name='eliminar_libro'),
     path('eliminar_socio/<num_soc>', eliminar_socio, name='eliminar_socio'),
+    path('editar_encargado/<codigo_encargado>', editar_encargado, name='editar_encargado'),
+    path('editar_socio/<num_soc>', editar_socio, name='editar_socio'),
+    path('editar_libro/<codigo_libro>', editar_libro, name='editar_libro'),
+
 
 ]
