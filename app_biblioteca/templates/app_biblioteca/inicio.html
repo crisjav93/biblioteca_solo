@@ -23,26 +23,35 @@
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'inicio' %}">Bienvenido</a>
-                <a class="btn btn-primary" href="{% url 'encargados' %}">Encargados</a>
-                <a class="btn btn-primary" href="{% url 'socios' %}">Socios</a>
-                <a class="btn btn-primary" href="{% url 'libros' %}">Libros</a>
-                <a class="btn btn-primary" href="#signup">Sign Up</a>
+                <a class="btn btn-primary" href="{% url 'leer_encargados' %}">Encargados</a>
+                <a class="btn btn-primary" href="{% url 'leer_socios' %}">Socios</a>
+                <a class="btn btn-primary" href="{% url 'leer_libros' %}">Libros</a>
+                {% if not request.user.is_authenticated %}
+                <a class="btn btn-danger" href="{% url 'login' %}">Iniciar Sesion</a>
+                <a class="btn btn-primary" href="{% url 'register' %}">Registrarse</a>
+                {% else %}
+                <p>¡Hola {{ request.user.username }}!</p>
+                <img src="{{ imagen }}" alt = "imagen de perfil"/>
+                <a class="btn btn-danger" href="{% url 'logout' %}">Cerrar sesion</a>
+                {% endif %}
             </div>
         </nav>
         <!-- Masthead-->
-        <header class="masthead"style="background-image: url({% static 'app_biblioteca/assets/img/biblioteca.jpg' %})">
+        <header class="masthead"style="background-image: url({% static 'app_biblioteca/assets/img/libros.jpg' %})">
             <div class="container position-relative">
                 <div class="row justify-content-center">
                     <div class="col-xl-6">
                         <div class="text-center text-white">
                             {% block titulo %}
-                             <h1>INICIO</h1>
+                             <h1>Bienvenido</h1>
                             {% endblock %}
                         </div>
                     </div>
                 </div>
             </div>
         </header>
+
+        <h1>{{ mensaje }}</h1>
         {% block contenido_que_cambia %}
          
         {% endblock %}

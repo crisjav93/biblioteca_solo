@@ -1,4 +1,9 @@
+from cProfile import label
+import email
+from turtle import width
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
 
 class Encargado_Form(forms.Form):
     nombre = forms.CharField(max_length=50)
@@ -18,3 +23,28 @@ class Libro_Form(forms.Form):
     autor = forms.CharField(max_length=50)
     genero = forms.CharField(max_length=50)
     codigo =forms.IntegerField()
+
+
+class UserRegisterForm(UserCreationForm):
+    email= forms.EmailField()
+    password1= forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+    password2= forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
+
+    last_name= forms. CharField()
+    first_name= forms.CharField()
+    class Meta:
+        model=User
+        fields= ['username', 'email', 'password1', 'password2','last_name','first_name']
+        help_texts= {k:"" for k in fields}
+
+
+class UserEditForm(UserCreationForm):
+    email= forms.EmailField()
+    password1= forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+    password2= forms.CharField(label='Repetir Contraseña', widget=forms.PasswordInput)
+    
+    class Meta:
+        model=User
+        fields= ['username', 'email', 'password1', 'password2']
+        help_texts= {k:"" for k in fields}
+

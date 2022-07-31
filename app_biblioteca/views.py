@@ -1,22 +1,31 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .models import *
 from .forms import *
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 #RENDERIZADO
 def inicio(request):
-    return render(request, 'app_biblioteca/inicio.html')
+    imagen = Avatar.objects.filter(user=request.user.id)[0].imagen.url
+    return render(request, 'app_biblioteca/inicio.html', {'imagen':imagen})
 
 def encargados(request):
-    return render(request, 'app_biblioteca/encargados.html')
+    imagen = Avatar.objects.filter(user=request.user.id)[0].imagen.url
+    return render(request, 'app_biblioteca/encargados.html', {'imagen':imagen})
 
 def socios(request):
-    return render(request, 'app_biblioteca/socios.html')
+    imagen = Avatar.objects.filter(user=request.user.id)[0].imagen.url
+    return render(request, 'app_biblioteca/socios.html', {'imagen':imagen})
 
 def libros(request):
-    return render(request, 'app_biblioteca/libros.html')
+    imagen = Avatar.objects.filter(user=request.user.id)[0].imagen.url
+    return render(request, 'app_biblioteca/libros.html',{'imagen':imagen})
 
 #INGRESO
+@login_required
 def ingreso_encargados(request):
     if (request.method == 'POST'):
         form = Encargado_Form(request.POST)
@@ -33,6 +42,7 @@ def ingreso_encargados(request):
         form = Encargado_Form()
     return render(request,'app_biblioteca/ingreso_encargados.html',{'formulario':form})
 
+@login_required
 def ingreso_socios(request):
     if (request.method == 'POST'):
         form = Socio_Form(request.POST)
@@ -50,6 +60,7 @@ def ingreso_socios(request):
         form = Socio_Form()
     return render(request,'app_biblioteca/ingreso_socios.html', {'formulario':form})
 
+@login_required
 def ingreso_libros(request):
     if (request.method == 'POST'):
         form = Libro_Form(request.POST)
@@ -114,24 +125,28 @@ def leer_socios(request):
     return render(request, 'app_biblioteca/leer_socios.html',{'socios':socios})
 
 #DELETE
+@login_required
 def eliminar_encargado(request, codigo_encargado):
     encargado = Encargado.objects.get(codigo=codigo_encargado) #trae por cod.
     encargado.delete()
     encargados = Encargado.objects.all()
     return render(request, 'app_biblioteca/leer_encargados.html',{'encargados':encargados})
 
+@login_required
 def eliminar_libro(request, codigo_libro):
     libro = Libro.objects.get(codigo=codigo_libro)
     libro.delete()
     libros = Libro.objects.all()
     return render(request, 'app_biblioteca/leer_libros.html',{'libros':libros})
 
+@login_required
 def eliminar_socio(request, num_soc):
     socio = Socio.objects.get(num_socio=num_soc)
     socio.delete()
     socios = Socio.objects.all()
     return render(request, 'app_biblioteca/leer_socios.html',{'socios':socios})
 
+@login_required
 def editar_encargado(request, codigo_encargado):
     encargado = Encargado.objects.get(codigo=codigo_encargado)
     if request.method == 'POST':
@@ -148,6 +163,7 @@ def editar_encargado(request, codigo_encargado):
         form = Encargado_Form(initial={'nombre':encargado.nombre, 'apellido':encargado.apellido, 'codigo':encargado.codigo, 'email':encargado.email})
     return render(request, 'app_biblioteca/editar_encargado.html',{'formulario':form,'codigo_encargado':codigo_encargado})
 
+@login_required
 def editar_socio(request, num_soc):
     socio = Socio.objects.get(num_socio=num_soc)
     if request.method == 'POST':
@@ -165,6 +181,7 @@ def editar_socio(request, num_soc):
         form = Socio_Form(initial={'nombre':socio.nombre, 'apellido':socio.apellido, 'num_socio':socio.num_socio, 'email':socio.email, 'fecha_alta':socio.fecha_alta})
     return render(request, 'app_biblioteca/editar_socio.html',{'formulario':form,'num_soc':num_soc})
 
+@login_required
 def editar_libro(request, codigo_libro):
     libro = Libro.objects.get(codigo=codigo_libro)
     if request.method == 'POST':
@@ -180,3 +197,59 @@ def editar_libro(request, codigo_libro):
     else:
         form = Libro_Form(initial={'titulo':libro.titulo, 'autor':libro.autor, 'genero':libro.genero, 'codigo':libro.codigo})
     return render(request, 'app_biblioteca/editar_libro.html',{'formulario':form,'codigo_libro':codigo_libro})
+
+
+#Login - Logout
+def inicio(request):
+    return render(request, 'app_biblioteca/inicio.html')
+
+def login_request(request):
+    if request.method=="POST":
+        form=AuthenticationForm(request, data=request.POST)
+
+        if form.is_valid():
+            usu= form.cleaned_data.get('username')
+            clave=form.cleaned_data.get('password')
+
+            usuario=authenticate(username=usu, password=clave)
+
+            if usuario is not None:
+                login(request, usuario)
+                return render(request,"app_biblioteca/inicio.html", {'form':form,'mensaje':f"Bienvenido {usuario}"})
+            else:
+                return render(request, "app_biblioteca/login.html", {'form':form,'mensaje':'Error,usuario o clave erroneos'})
+        else:
+            return render(request, "app_biblioteca/login.html", {'form':form, 'mensaje':f'Formulario invalido'})
+    else:
+        form=AuthenticationForm()
+        return render(request, "app_biblioteca/login.html", {'form':form})
+
+@login_required   
+def editar_perfil(request):
+    usuario=request.user
+    
+    if request.method == 'POST':
+        formulario=UserEditForm(request.POST, instance=usuario)
+        if formulario.is_valid():
+            informacion=formulario.cleaned_data
+            usuario.email=informacion['email']
+            usuario.password1=informacion['password1']
+            usuario.password2=informacion['password2']
+            usuario.save()
+
+            return render(request, 'app_biblioteca/inicio.html', {'usuario':usuario, 'mensaje':'Perfil editado exitosamente'})
+
+    else:
+        formulario=UserEditForm(instance = usuario)
+    return render(request, 'app_biblioteca/editar_perfil.html',{'formulario':formulario, 'usuario':usuario.username})    
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            form.save()
+            return render(request,"app_biblioteca/inicio.html", {'form':form,'mensaje':f"Usuario Creado: {username}"})
+    else:
+        form = UserRegisterForm()
+    return render(request, 'app_biblioteca/register.html',{'form':form})

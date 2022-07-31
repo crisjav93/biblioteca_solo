@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Encargado(models.Model):
@@ -28,3 +29,7 @@ class Libro(models.Model):
 
     def __str__(self):
         return self.titulo+' '+self.autor+' '+self.genero+' '+str(self.codigo)
+
+class Avatar(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE) #ForingKey vincula el usuario con el avatar en este caso
+    imagen = models.ImageField(upload_to='avatares', null=True, blank= True)

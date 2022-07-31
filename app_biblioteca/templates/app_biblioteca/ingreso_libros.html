@@ -14,7 +14,7 @@
 <p style="color:red">"HAY ALGO MAL"</p>
 {% endif %}
 
-<form action="{% url 'ingreso_libros' %}" method="POST"> {% csrf_token %}
+<form action="{% url 'ingreso_libros' %}" method="POST">{% csrf_token %}
 
     <table>
         {{ formulario.as_table }}
