@@ -22,18 +22,24 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
+                {% if not request.user.is_authenticated %}
+                <a class="navbar-brand" href="{% url 'inicio' %}">Bienvenido</a>
+                <a class="btn btn-danger" href="{% url 'login' %}">Iniciar Sesion</a>
+                <a class="btn btn-primary" href="{% url 'register' %}">Registrarse</a>
+    
+                {% else %}
                 <a class="navbar-brand" href="{% url 'inicio' %}">Bienvenido</a>
                 <a class="btn btn-primary" href="{% url 'leer_encargados' %}">Encargados</a>
                 <a class="btn btn-primary" href="{% url 'leer_socios' %}">Socios</a>
                 <a class="btn btn-primary" href="{% url 'leer_libros' %}">Libros</a>
-                {% if not request.user.is_authenticated %}
-                <a class="btn btn-danger" href="{% url 'login' %}">Iniciar Sesion</a>
-                <a class="btn btn-primary" href="{% url 'register' %}">Registrarse</a>
-                {% else %}
-                <p>¡Hola {{ request.user.username }}!</p>
-                <img src="{{ imagen }}" alt = "imagen de perfil"/>
+                
+                
+                
+                <p class="text-muted small mb-4 mb-lg-0">¡Hola {{ request.user.username }}!.</p>
+
                 <a class="btn btn-danger" href="{% url 'logout' %}">Cerrar sesion</a>
                 {% endif %}
+               
             </div>
         </nav>
         <!-- Masthead-->
@@ -53,7 +59,7 @@
 
         <h1>{{ mensaje }}</h1>
         {% block contenido_que_cambia %}
-         
+        
         {% endblock %}
     
 

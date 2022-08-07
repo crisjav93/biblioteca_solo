@@ -30,6 +30,6 @@ class Libro(models.Model):
     def __str__(self):
         return self.titulo+' '+self.autor+' '+self.genero+' '+str(self.codigo)
 
-class Avatar(models.Model):
-    user=models.ForeignKey(User, on_delete=models.CASCADE) #ForingKey vincula el usuario con el avatar en este caso
+class avatar(models.Model):
+    user= models.ForeignKey(User, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to='avatares', null=True, blank= True)

@@ -1,7 +1,9 @@
-from django.urls import path
+from django.urls import path,include
 from .views import *
 from django.contrib.auth.views import LogoutView
-
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
 
 
 
@@ -40,6 +42,9 @@ urlpatterns = [
     path('inicio/', inicio, name='inicio'),
 
     path('editar_perfil/', editar_perfil, name='editar_perfil'),
+    path('editar_pass/', editar_pass, name='editar_pass'),
+
+   
 
 
 ]

@@ -1,28 +1,30 @@
+from ast import Pass
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .models import *
 from .forms import *
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout, authenticate, login as logger
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 #RENDERIZADO
+@login_required
 def inicio(request):
-    imagen = Avatar.objects.filter(user=request.user.id)[0].imagen.url
-    return render(request, 'app_biblioteca/inicio.html', {'imagen':imagen})
+    avatares= avatar.objects.filter(user=request.user.id)
+    return render(request, "app_biblioteca/inicio.html", {"url":avatares[0].imagen.url})
 
+@login_required
 def encargados(request):
-    imagen = Avatar.objects.filter(user=request.user.id)[0].imagen.url
-    return render(request, 'app_biblioteca/encargados.html', {'imagen':imagen})
-
+    return render(request, 'app_biblioteca/encargados.html')
+    
+@login_required
 def socios(request):
-    imagen = Avatar.objects.filter(user=request.user.id)[0].imagen.url
-    return render(request, 'app_biblioteca/socios.html', {'imagen':imagen})
+    return render(request, 'app_biblioteca/socios.html')
 
+@login_required
 def libros(request):
-    imagen = Avatar.objects.filter(user=request.user.id)[0].imagen.url
-    return render(request, 'app_biblioteca/libros.html',{'imagen':imagen})
+    return render(request, 'app_biblioteca/libros.html')
 
 #INGRESO
 @login_required
@@ -214,20 +216,19 @@ def login_request(request):
             usuario=authenticate(username=usu, password=clave)
 
             if usuario is not None:
-                login(request, usuario)
+                logger(request, usuario)
                 return render(request,"app_biblioteca/inicio.html", {'form':form,'mensaje':f"Bienvenido {usuario}"})
             else:
                 return render(request, "app_biblioteca/login.html", {'form':form,'mensaje':'Error,usuario o clave erroneos'})
         else:
             return render(request, "app_biblioteca/login.html", {'form':form, 'mensaje':f'Formulario invalido'})
-    else:
-        form=AuthenticationForm()
-        return render(request, "app_biblioteca/login.html", {'form':form})
+
+    form=AuthenticationForm()
+    return render(request, "app_biblioteca/login.html", {'form':form})
 
 @login_required   
 def editar_perfil(request):
     usuario=request.user
-    
     if request.method == 'POST':
         formulario=UserEditForm(request.POST, instance=usuario)
         if formulario.is_valid():
@@ -236,7 +237,6 @@ def editar_perfil(request):
             usuario.password1=informacion['password1']
             usuario.password2=informacion['password2']
             usuario.save()
-
             return render(request, 'app_biblioteca/inicio.html', {'usuario':usuario, 'mensaje':'Perfil editado exitosamente'})
 
     else:
@@ -253,3 +253,14 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'app_biblioteca/register.html',{'form':form})
+
+@login_required
+def editar_pass(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(user = request.user , data = request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('Actualización de usuario')
+    else:
+        form = PasswordChangeForm( user = request.user)
+    return render(request, 'app_biblioteca/editar_pass.html', {'form':form, 'user':request.user})
