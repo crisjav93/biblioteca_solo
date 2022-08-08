@@ -1,4 +1,5 @@
 from ast import Pass
+from pdb import post_mortem
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .models import *
@@ -6,7 +7,7 @@ from .forms import *
 from django.contrib.auth import login, logout, authenticate, login as logger
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
 
 #RENDERIZADO
@@ -274,3 +275,8 @@ class HomeView(ListView):
 class ArticleDetailView(DetailView):
     model = Post
     template_name = 'app_biblioteca/article_detail.html'
+
+class agregar_post(CreateView):
+    model = Post
+    template_name = 'app_biblioteca/agregar_post.html'
+    fields = '__all__'

@@ -1,0 +1,23 @@
+{% extends 'app_biblioteca/inicio.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1>Compartí tus IDEAS</h1>
+{% endblock %}
+
+
+{% block contenido_que_cambia %}
+
+<h1>Nuestros temas de conversación</h1>
+<br></br>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-secondary">Postear</button>
+    <a class="btn btn-secondary" href="{% url 'social' %}">Regresar</a>
+
+
+
+
+{% endblock %}

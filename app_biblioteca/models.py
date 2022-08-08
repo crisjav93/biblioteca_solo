@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 class Encargado(models.Model):
@@ -41,3 +42,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.titulo + ' - Autor: ' + str(self.autor)
+
+    def get_absolute_url(self):
+        #return reverse('article_detail', args =(str(self.id)))
+        return reverse('social')
