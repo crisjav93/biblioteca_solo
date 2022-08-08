@@ -6,6 +6,7 @@ from .forms import *
 from django.contrib.auth import login, logout, authenticate, login as logger
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, DetailView
 
 
 #RENDERIZADO
@@ -256,6 +257,7 @@ def register(request):
 
 @login_required
 def editar_pass(request):
+    
     if request.method == 'POST':
         form = PasswordChangeForm(user = request.user , data = request.POST)
         if form.is_valid():
@@ -264,3 +266,11 @@ def editar_pass(request):
     else:
         form = PasswordChangeForm( user = request.user)
     return render(request, 'app_biblioteca/editar_pass.html', {'form':form, 'user':request.user})
+
+class HomeView(ListView):
+    model = Post
+    template_name = 'app_biblioteca/social.html'
+
+class ArticleDetailView(DetailView):
+    model = Post
+    template_name = 'app_biblioteca/article_detail.html'

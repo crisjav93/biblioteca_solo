@@ -1,0 +1,24 @@
+{% extends 'app_biblioteca/inicio.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1>Compartí tus IDEAS</h1>
+{% endblock %}
+
+
+{% block contenido_que_cambia %}
+
+<h1>Nuestros temas de conversación</h1>
+
+<ul>
+{% for post in object_list %}
+    <li><a href="{% url 'article_detail' post.pk %}">{{ post.titulo }}</a> - {{ post.autor }}<br/>
+    
+    </li>
+
+{% endfor %}
+</ul>
+
+{% endblock %}
+

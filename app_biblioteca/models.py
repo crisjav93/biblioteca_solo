@@ -30,6 +30,14 @@ class Libro(models.Model):
     def __str__(self):
         return self.titulo+' '+self.autor+' '+self.genero+' '+str(self.codigo)
 
-class avatar(models.Model):
+class Avatar(models.Model):
     user= models.ForeignKey(User, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to='avatares', null=True, blank= True)
+
+class Post(models.Model):
+    titulo = models.CharField(max_length=255)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+
+    def __str__(self):
+        return self.titulo + ' - Autor: ' + str(self.autor)

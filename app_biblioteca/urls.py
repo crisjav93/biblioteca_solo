@@ -31,6 +31,8 @@ urlpatterns = [
     path('editar_encargado/<codigo_encargado>', editar_encargado, name='editar_encargado'),
     path('editar_socio/<num_soc>', editar_socio, name='editar_socio'),
     path('editar_libro/<codigo_libro>', editar_libro, name='editar_libro'),
+    path('social/', HomeView.as_view(), name='social' ),
+    path('article_detail/<int:pk>',ArticleDetailView.as_view(), name='article_detail' ),#pk=private key, asigna un codigo único al articulo en este caso
     
     #LOGIN----------------------------------------------------------------
     

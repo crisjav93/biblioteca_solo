@@ -1,0 +1,23 @@
+{% extends 'app_biblioteca/inicio.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1>{{ 'Foro de la Comunidad' }}</h1>
+{% endblock %}
+
+
+{% block contenido_que_cambia %}
+<h1>{{ post.titulo }}</h1>
+<small>De: {{ post.autor.first_name }} {{ post.autor.last_name}}</small><br/>
+<hr>
+<br/>
+
+{{ post.body }}
+
+<br/>
+<br/>
+<br/>
+<a class="btn btn-primary" href="{% url 'social' %}">Regresar</a>
+{% endblock %}
+
