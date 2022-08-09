@@ -7,7 +7,8 @@ from .forms import *
 from django.contrib.auth import login, logout, authenticate, login as logger
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 
 #RENDERIZADO
@@ -268,9 +269,11 @@ def editar_pass(request):
         form = PasswordChangeForm( user = request.user)
     return render(request, 'app_biblioteca/editar_pass.html', {'form':form, 'user':request.user})
 
+#POSTEO
 class HomeView(ListView):
     model = Post
     template_name = 'app_biblioteca/social.html'
+    ordering = ['-id']
 
 class ArticleDetailView(DetailView):
     model = Post
@@ -286,3 +289,7 @@ class editar_post(UpdateView):
     form_class = EditarForm
     template_name = 'app_biblioteca/editar_post.html'
 
+class eliminar_post(DeleteView):
+    model = Post
+    template_name = 'app_biblioteca/eliminar_post.html'
+    success_url = reverse_lazy('social')
