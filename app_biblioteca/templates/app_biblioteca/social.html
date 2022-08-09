@@ -13,7 +13,7 @@
 
 <ul>
 {% for post in object_list %}
-    <li><a href="{% url 'article_detail' post.pk %}">{{ post.titulo }}</a> - {{ post.autor }}<br/>
+    <li><a href="{% url 'article_detail' post.pk %}">{{ post.titulo }}</a> | Autor: {{ post.autor.first_name }} {{ post.autor.last_name}} |<small> <a href="{% url 'editar_post' post.pk %}">(Editar)</a></small>
     
     </li>
 

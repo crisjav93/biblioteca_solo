@@ -4,6 +4,7 @@ from turtle import width
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
+from .models import *
 
 class Encargado_Form(forms.Form):
     nombre = forms.CharField(max_length=50)
@@ -58,3 +59,26 @@ class PasswordChangeForm(UserCreationForm):
         fields = ["email","password1","password2"]
         help_texts = {k: "" for k in fields}
 
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('__all__')
+        
+        widget = {
+            'titulo': forms.TextInput(attrs={'class':'form-control'}),
+            'autor': forms.Select(attrs={'class':'form-control'}),
+            'body': forms.Textarea(attrs={'class':'form-control'}),
+        
+        }   
+
+class EditarForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('titulo','body')
+        
+        widget = {
+            'titulo': forms.TextInput(attrs={'class':'form-control'}),
+            'autor': forms.Select(attrs={'class':'form-control'}),
+            'body': forms.Textarea(attrs={'class':'form-control'}),
+        
+        }   

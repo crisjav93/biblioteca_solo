@@ -7,7 +7,7 @@ from .forms import *
 from django.contrib.auth import login, logout, authenticate, login as logger
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 
 #RENDERIZADO
@@ -278,5 +278,11 @@ class ArticleDetailView(DetailView):
 
 class agregar_post(CreateView):
     model = Post
+    form_class = PostForm
     template_name = 'app_biblioteca/agregar_post.html'
-    fields = '__all__'
+
+class editar_post(UpdateView):
+    model = Post
+    form_class = EditarForm
+    template_name = 'app_biblioteca/editar_post.html'
+

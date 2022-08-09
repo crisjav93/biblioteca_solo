@@ -34,7 +34,8 @@ urlpatterns = [
     path('social/', HomeView.as_view(), name='social' ),
     path('article_detail/<int:pk>',ArticleDetailView.as_view(), name='article_detail' ),#pk=private key, asigna un codigo único al articulo en este caso
     path('agregar_post/', agregar_post.as_view(),name = 'agregar_post'),
-    
+    path('article_detail/editar_post/<int:pk>', editar_post.as_view(), name = 'editar_post'),
+
     
     #LOGIN----------------------------------------------------------------
     

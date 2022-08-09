@@ -9,7 +9,7 @@
 
 {% block contenido_que_cambia %}
 <h1>{{ post.titulo }}</h1>
-<small>De: {{ post.autor.first_name }} {{ post.autor.last_name}}</small><br/>
+<small>De: {{ post.autor.first_name }} {{ post.autor.last_name}} - <a href="{% url 'editar_post' post.pk %}">(Editar)</a></small><br/>
 <hr>
 <br/>
 
