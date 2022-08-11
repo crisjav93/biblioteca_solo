@@ -8,20 +8,21 @@
 
 
 {% block contenido_que_cambia %}
+{% if user.is_authenticated %}
 
-<h1>Editar Post</h1>
-<br></br>
+    <h1>Editar Post</h1>
+    <br></br>
 
-<div class="form-group">
-<table>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_table }}
-    </table>
-        <button class="btn btn-secondary">Postear</button>
-        <a class="btn btn-secondary" href="{% url 'social' %}">Regresar</a>
-</div>
+    <div class="form-group">
+    <table>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_table }}
+        </table>
+            <button class="btn btn-secondary">Postear</button>
+            <a class="btn btn-secondary" href="{% url 'social' %}">Regresar</a>
+    </div>
 
-
+{% endif %}
 
 {% endblock %}

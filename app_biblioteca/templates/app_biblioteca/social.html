@@ -8,18 +8,23 @@
 
 
 {% block contenido_que_cambia %}
-<a class="btn btn-secondary" href="{% url 'agregar_post' %}">Crear un Posteo</a>
+{% if user.is_authenticated %}
+    <a class="btn btn-secondary" href="{% url 'agregar_post' %}">Crear un Posteo</a>
+{% endif %}
+
+
 <h1>Nuestros temas de conversación</h1>
 
 <ul>
 {% for post in object_list %}
-    <li><a href="{% url 'article_detail' post.pk %}">{{ post.titulo }}</a> | Autor: {{ post.autor.first_name }} {{ post.autor.last_name}} |<small> <a href="{% url 'editar_post' post.pk %}">(Editar)</a>
-        <a href="{% url 'eliminar_post' post.pk %}">(Eliminar)</a>
-    </small><br/>
+    <li><a href="{% url 'article_detail' post.pk %}">{{ post.titulo }}</a>  Autor: {{ post.autor.first_name }} {{ post.autor.last_name}}
+        {% if user.is_authenticated %}
+            | <small> <a href="{% url 'editar_post' post.pk %}">(Editar)</a>
+            <a href="{% url 'eliminar_post' post.pk %}">(Eliminar)</a>
+            </small><br/>
+        {% endif %}
     </li>
 
 {% endfor %}
 </ul>
-
 {% endblock %}
-

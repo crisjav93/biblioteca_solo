@@ -8,16 +8,21 @@
 
 
 {% block contenido_que_cambia %}
-<h1>{{ post.titulo }}</h1>
-<small>De: {{ post.autor.first_name }} {{ post.autor.last_name}} - <a href="{% url 'editar_post' post.pk %}">(Editar)</a></small><br/>
-<hr>
-<br/>
+{% if user.is_authenticated %}
+    {% if user.id == post.autor.id %}
 
-{{ post.body }}
+        <h1>{{ post.titulo }} - {{ post.autor.id }}</h1>
+        <small>De: {{ post.autor.first_name }} {{ post.autor.last_name}} - <a href="{% url 'editar_post' post.pk %}">(Editar)</a></small><br/>
+        <hr>
+        <br/>
+    {% endif %}    
+{% endif %}
+    <dd>{{ post.body }}</dd>
 
-<br/>
-<br/>
-<br/>
-<a class="btn btn-primary" href="{% url 'social' %}">Regresar</a>
+    <br/>
+    <br/>
+    <br/>
+    <a class="btn btn-primary" href="{% url 'social' %}">Regresar</a>
+
 {% endblock %}
 
