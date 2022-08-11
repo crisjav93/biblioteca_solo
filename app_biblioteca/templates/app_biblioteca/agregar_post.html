@@ -15,11 +15,19 @@
     <table>
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_table }}
+            {{ form.as_p }}
         </table>
             <button class="btn btn-secondary">Postear</button>
             <a class="btn btn-secondary" href="{% url 'social' %}">Regresar</a>
     </div>
+
+    <script>
+        var name = '{{ user.id }}';
+        document.getElementById('elder').value
+            = name;
+
+
+    </script>
 {% endif %}
 
 {% endblock %}

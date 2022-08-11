@@ -19,9 +19,11 @@
 {% for post in object_list %}
     <li><a href="{% url 'article_detail' post.pk %}">{{ post.titulo }}</a>  Autor: {{ post.autor.first_name }} {{ post.autor.last_name}}
         {% if user.is_authenticated %}
-            | <small> <a href="{% url 'editar_post' post.pk %}">(Editar)</a>
-            <a href="{% url 'eliminar_post' post.pk %}">(Eliminar)</a>
-            </small><br/>
+            {% if user.id == post.autor.id %}
+                <small> <a href="{% url 'editar_post' post.pk %}">(Editar)</a>
+                <a href="{% url 'eliminar_post' post.pk %}">(Eliminar)</a>
+                </small><br/>
+            {% endif %}
         {% endif %}
     </li>
 

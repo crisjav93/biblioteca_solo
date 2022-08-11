@@ -9,6 +9,7 @@
 
 {% block contenido_que_cambia %}
 {% if user.is_authenticated %}
+    <h1>{{ post.titulo }}</h1>
     {% if user.id == post.autor.id %}
 
         <h1>{{ post.titulo }} - {{ post.autor.id }}</h1>
