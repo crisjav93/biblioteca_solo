@@ -36,7 +36,7 @@
                 
                 
                 <p class="text-muted small mb-4 mb-lg-0">¡Hola {{ request.user.username }}!.</p>
-
+                <a class="btn btn-primary" href="{% url 'editar_perfil' %}">Editar Perfil</a>
                 <a class="btn btn-danger" href="{% url 'logout' %}">Cerrar sesion</a>
                 {% endif %}
                

@@ -1,11 +1,12 @@
 from ast import Pass
 from pdb import post_mortem
+from typing import Generic
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .models import *
 from .forms import *
 from django.contrib.auth import login, logout, authenticate, login as logger
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -229,8 +230,8 @@ def login_request(request):
     form=AuthenticationForm()
     return render(request, "app_biblioteca/login.html", {'form':form})
 
-@login_required   
-def editar_perfil(request):
+#@login_required   
+#def editar_perfil(request):
     usuario=request.user
     if request.method == 'POST':
         formulario=UserEditForm(request.POST, instance=usuario)
@@ -246,6 +247,14 @@ def editar_perfil(request):
         formulario=UserEditForm(instance = usuario)
     return render(request, 'app_biblioteca/editar_perfil.html',{'formulario':formulario, 'usuario':usuario.username})    
 
+class editar_perfil(UpdateView):
+    form_class = UserEditForm
+    template_name = 'app_biblioteca/editar_perfil.html'
+    success_url = reverse_lazy('inicio')
+
+    def get_object(self):
+        return self.request.user
+
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -257,6 +266,10 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'app_biblioteca/register.html',{'form':form})
 
+#class editar_pass(PasswordChangeForm):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('inicio')
+
 @login_required
 def editar_pass(request):
     
@@ -264,7 +277,7 @@ def editar_pass(request):
         form = PasswordChangeForm(user = request.user , data = request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse('Actualización de usuario')
+            return render(request,'app_biblioteca/inicio.html', {'form':form,'mensaje':'Contraseña Actualizada'})
     else:
         form = PasswordChangeForm( user = request.user)
     return render(request, 'app_biblioteca/editar_pass.html', {'form':form, 'user':request.user})

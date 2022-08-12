@@ -1,5 +1,6 @@
 from django.urls import path,include
 from .views import *
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -47,8 +48,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(template_name='app_biblioteca/logout.html'), name='logout'),
     path('inicio/', inicio, name='inicio'),
 
-    path('editar_perfil/', editar_perfil, name='editar_perfil'),
-    path('editar_pass/', editar_pass, name='editar_pass'),
+    path('editar_perfil/', editar_perfil.as_view(), name='editar_perfil'),
+    path('password/', editar_pass, name='editar_pass'),
 
    
 
