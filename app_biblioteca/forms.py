@@ -44,11 +44,6 @@ class UserEditForm(UserChangeForm):
     last_name= forms.CharField(max_length=100,label='Apellido', widget=forms.TextInput(attrs={'class':'form-control'}))
     first_name=forms.CharField(max_length=100,label='Nombre', widget=forms.TextInput(attrs={'class':'form-control'}))
     username = forms.CharField(max_length=100,label='Usuario', widget=forms.TextInput(attrs={'class':'form-control'}))
-    #last_login = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class':'form-control'}))
-    #is_superuser = forms.CharField(max_length=100, widget=forms.CheckboxInput(attrs={'class':'form-check'}))
-    #is_staff = forms.CharField(max_length=100, widget=forms.CheckboxInput(attrs={'class':'form-check'}))
-    #is_active = forms.CharField(max_length=100, widget=forms.CheckboxInput(attrs={'class':'form-check'}))
-    #date_joined = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class':'form-control'}))
     
     class Meta:
         model=User
@@ -57,13 +52,13 @@ class UserEditForm(UserChangeForm):
 
 class PasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control','type':'password'}))
-    new_password1 = forms.CharField(label = "password", widget = forms.PasswordInput(attrs={'class':'form-control','type':'password'}))
-    new_password2 =  forms.CharField(label = "password validador" , widget = forms.PasswordInput(attrs={'class':'form-control','type':'password'}))
-
+    new_password1 = forms.CharField(label = "nueva clave", widget = forms.PasswordInput(attrs={'class':'form-control','type':'password'}))
+    new_password2 =  forms.CharField(label = "repita la clave" , widget = forms.PasswordInput(attrs={'class':'form-control','type':'password'}))
+    
     class Meta:
         model = User
         fields = ["old_password","password1","password2"]
-        help_texts = {k: "" for k in fields}
+        help_texts = None #{'old_password': None, 'password1':None,'password2':None}
 
 class PostForm(forms.ModelForm):
     class Meta:
