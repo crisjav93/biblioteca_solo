@@ -10,6 +10,8 @@
 {% block contenido_que_cambia %}
 {% if user.is_authenticated %}
     <a class="btn btn-secondary" href="{% url 'agregar_post' %}">Crear un Posteo</a>
+    <a class="btn btn-secondary" href="{% url 'inbox' %}">Inbox</a>
+
 {% endif %}
 
 

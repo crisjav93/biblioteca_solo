@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils import timezone
+
 
 # Create your models here.
 class Encargado(models.Model):
@@ -45,3 +47,30 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('social')
+
+# class mensaje(models.Model):
+#     asunto = models.CharField(max_length=255)
+#     emisor = models.ForeignKey(User, on_delete=models.CASCADE)
+#     receptor = models.ForeignKey(User, on_delete=models.CASCADE)
+#     body = models.TextField()
+
+#     def __str__(self):
+#         return self.asunto + ' - Autor: ' + str(self.emisor)
+
+#     def get_absolute_url(self):
+#         return reverse('social')
+
+class Hilo(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='+')
+    receptor = models.ForeignKey(User, on_delete=models.CASCADE,related_name='+')
+
+class Mensaje(models.Model):
+    hilo = models.ForeignKey('hilo',related_name='+', on_delete=models.CASCADE, blank=True, null=True)
+    remitente_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='+')
+    receptor_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='+')
+    body = models.CharField(max_length=1000)
+    image = models.ImageField(upload_to='uploads/imagenes', blank=True, null=True)
+    fecha = models.DateTimeField(default=timezone.now)
+    visto = models.BooleanField(default=False)
+
+

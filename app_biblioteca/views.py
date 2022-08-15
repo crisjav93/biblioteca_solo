@@ -1,4 +1,5 @@
 from ast import Pass
+from modulefinder import replacePackageMap
 from pdb import post_mortem
 from typing import Generic
 from django.shortcuts import redirect, render
@@ -10,7 +11,9 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, Pass
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-
+from django.views import View
+from django.db.models import Q
+from django.contrib.auth.models import User
 
 #RENDERIZADO
 @login_required
@@ -306,3 +309,79 @@ class eliminar_post(DeleteView):
     model = Post
     template_name = 'app_biblioteca/eliminar_post.html'
     success_url = reverse_lazy('social')
+
+class lista_hilos(ListView):
+    model = Hilo
+    template_name = 'app_biblioteca/inbox.html'
+    ordering = ['-id']
+
+# class crear_hilo(CreateView):
+#     model = Hilo
+#     form_class = HiloForm
+#     template_name = 'app_biblioteca/crear_hilo'
+
+
+class lista_hilos(View):
+    def get(self, request, *args, **kwargs):
+        hilos = Hilo.objects.filter(Q(user=request.user) | Q(receptor=request.user))
+
+        context = {
+            'hilos':hilos
+        }
+        return render(request,'app_biblioteca/inbox.html',context)
+
+class crear_hilo(View):
+    def get(self,request, *args, **kwargs):
+        form = HiloForm()
+        context = {
+            'form':form
+        }
+        return render(request,'app_biblioteca/crear_hilo.html', context)
+    def post(self, request, *args, **kwargs):
+        form = HiloForm(request.POST)
+        username = request.POST.get('username')
+
+        try:
+            receptor = User.objects.get(username=username)
+            if Hilo.objects.filter(user=request.user, receptor=receptor).exists():
+                hilo = Hilo.objects.filter(user=request.user, receptor=receptor)[0]
+                return redirect('hilo', pk=hilo.pk)
+            elif Hilo.objects.filter(user=receptor, receptor=request.user).exist():
+                hilo = Hilo.objects.filter(user = receptor, receptor=request.user)[0]
+                return redirect('hilo',pk=hilo.pk)
+            if form.is_valid():
+                hilo = Hilo(user=request.user, receptor=receptor)
+                hilo.save()
+                return redirect('hilo',pk=hilo.pk)
+        except:
+            return redirect('crear_hilo')
+
+class hiloView(View):
+    def get(self, request,pk, *args, **kwargs):
+        form = MensajeForm()
+        hilo = Hilo.objects.get(pk=pk)
+        lista_mensaje = Mensaje.objects.filter(hilo__pk__contains=pk)
+        context = {
+            'hilo':hilo,
+            'form':form,
+            'lista_mensaje':lista_mensaje
+        }
+        return render(request, 'app_biblioteca/hilo.html', context)
+
+class crear_mensaje(View):
+    def post(self, request, pk, *args, **kwargs):
+        hilo = Hilo.objects.get(pk=pk)
+        if hilo.receptor == request.user:
+            receptor = hilo.user
+        else:
+            receptor = hilo.receptor
+
+        mensaje = Mensaje(
+            hilo=hilo,
+            emisor_user = request.user,
+            receptor_user = receptor,
+            body = request.POST.get('mensaje')
+        )
+
+        mensaje.save()
+        return redirect('hilo',pk=pk)

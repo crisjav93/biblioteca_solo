@@ -1,3 +1,4 @@
+from typing import List
 from django.urls import path,include
 from .views import *
 from django.contrib.auth import views as auth_views
@@ -51,7 +52,11 @@ urlpatterns = [
     path('editar_perfil/', editar_perfil.as_view(), name='editar_perfil'),
     path('password/', editar_pass, name='editar_pass'),
 
-   
+   #mensajeria------------------------------------------------------------------
+   path('inbox/', lista_hilos.as_view(),name = 'inbox'),
+   path('inbox/crear_hilo/', crear_hilo.as_view(), name = 'crear_hilo'),
+   path('inbox/<int:pk>/',hiloView.as_view(),name='hilo'),
+   path('inbox/<int:pk>crear_hilo/', crear_mensaje.as_view(),name='crear_mensaje')
 
 
 ]

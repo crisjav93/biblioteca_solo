@@ -1,0 +1,40 @@
+{% extends 'app_biblioteca/inicio.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1>Compartí tus IDEAS</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h1>¿En que piensas?</h1>
+<br></br>
+{% if user.is_authenticated %}
+    <div class ='container'>
+        <div class = 'row'>
+            <div class = 'col-md-12 p-5'>
+                <h3>tu conversación</h3>
+            </div>
+        </div>
+
+        <div class = 'row'>
+            <div class = 'col-md-12 p-5'>
+                <form method="GET" action="{% url 'crear_hilo' %}">
+                    <button class = 'btn btn-light p-3' type ='submit'>Iniciar conversación</button>
+                </form>
+            </div>
+        </div>
+
+        {% for hilo in hilos.all %}
+        <div class="row mb-3">
+            <div class="card col-md-12 p-5 shadow-sm">
+                <h5>{{ hilo.user }} - {{ hilo.receptor }}</h5>
+                <a class = 'stretched-link' href="{% url 'hilo' hilo.pk %}"></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

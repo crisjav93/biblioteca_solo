@@ -85,3 +85,8 @@ class EditarForm(forms.ModelForm):
         
         }
 
+class HiloForm(forms.Form):
+    username = forms.CharField(label='', max_length=100)
+
+class MensajeForm(forms.Form):
+    mensaje = forms.CharField(label='',max_length=1000)
