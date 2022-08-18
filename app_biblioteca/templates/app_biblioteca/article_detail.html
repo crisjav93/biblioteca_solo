@@ -1,0 +1,29 @@
+{% extends 'app_biblioteca/inicio.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1>{{ 'Foro de la Comunidad' }}</h1>
+{% endblock %}
+
+
+{% block contenido_que_cambia %}
+{% if user.is_authenticated %}
+    <h1>{{ post.titulo }}</h1>
+    <small>De: {{ post.autor.first_name }} {{ post.autor.last_name}} - {{ post.fecha_post }}-
+    {% if user.id == post.autor.id %}
+
+        <a href="{% url 'editar_post' post.pk %}">(Editar)</a></small><br/>
+        <hr>
+        <br/>
+    {% endif %}    
+{% endif %}
+    <div class="row x-10">  
+        <dd><textarea class="form-control" rows="3">{{ post.body }}</textarea></dd>
+    </div>
+        <br/>
+        <br/>
+        <br/>
+        <a class="btn btn-primary" href="{% url 'social' %}">Regresar</a>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'app_biblioteca/inicio.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1><u>Perfil {{ request.user.username }}</u></h1>
+{% endblock %}
+
+
+
+ 
+{% block contenido_que_cambia2 %}
+
+
+
+   <img src= "{{ av }}" alt = "imagen de perfil" style="width: 500px; height: 500px; border-radius:50%;" />
+
+
+{% endblock contenido_que_cambia2 %}
+
+{% block editar_perfil %}
+<center><a class="btn btn-success" href="{% url 'editar_perfil' %}">Editar perfil</a></center>
+{% endblock editar_perfil%}
+
+
+
+
+
+
+
+
+

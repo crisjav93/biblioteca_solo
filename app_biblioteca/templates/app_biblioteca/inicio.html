@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        {% load static %}
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Bienvenidos biblioteca virtual</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'app_biblioteca/css/styles.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-light bg-light static-top">
+            <div class="container">
+                
+                {% if not request.user.is_authenticated %}
+                
+                <a class="navbar-brand" href="{% url 'inicio' %}" style="color:red" ><u>Inicio</u></a>
+                <a class="btn btn-danger" href="{% url 'login' %}">Iniciar Sesion</a>
+                <a class="btn btn-primary" href="{% url 'register' %}">Registrarse</a>
+                {% else %}
+                <b><a></a></b>
+                <a class="navbar-brand" href="{% url 'inicio' %}" style="color:blue"><u>¡Hola {{ request.user.username }}!</u></a>
+                <b><a></a></b>
+                <a class="btn btn-primary" href="{% url 'leer_encargados' %}">Encargados</a>
+                <a class="btn btn-primary" href="{% url 'leer_socios' %}">Socios</a>
+                <a class="btn btn-primary" href="{% url 'leer_libros' %}">Libros </a>
+                <b><a></a></b>
+                <a class="btn btn-success" href="{% url 'perfil' %}">perfil</a> 
+                
+                <b><a></a></b>
+                <a class="btn btn-danger" href="{% url 'logout' %}">Cerrar sesion</a>
+                <b><a></a></b>
+                {% endif %}
+               
+            </div>
+        </nav>
+        <!-- Masthead-->    
+        {% if not request.user.is_authenticated %}
+        <header class="masthead"style="background-image: url({% static 'app_biblioteca/assets/img/biblioteca.jpg' %})">
+        {% else %}
+        <header class="masthead"style="background-image: url({% static 'app_biblioteca/assets/img/libros.jpg' %})">
+        {% endif %}
+            <div class="container position-relative">
+                <div class="row justify-content-center">
+                    <div class="col-xl-6">
+                        <div class="text-center text-white">
+
+                            {% block titulo %}
+                            {% if not request.user.is_authenticated %}
+                            <h1><u>Inicio</u></h1>
+                            {% else %}
+                            <h1><u>Bienvenid@</u></h1>
+                            {% endif %}
+                            {% endblock %}
+                             {% block contenido_que_cambia2 %} {% endblock contenido_que_cambia2%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <h1>{{ mensaje }}</h1>
+        {% block contenido_que_cambia %}
+        
+        <center><a class="btn btn-primary" href="{% url 'social' %}"><h2>¡Compartí con la comunidad!</h2></a></center>
+
+        {% endblock %}
+<br></br>     
+<hr style="color:blue"><u></u></hr>
+        {% if request.user.is_authenticated %}
+    <article class="mb-4">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <p style="border: ridge blue 1px;"><u style="color:black">Mi nombre es Cristian Boto, tengo 24 años, estudio contabilidad, y estoy iniciandome en programación.
+                                                            <br><u style="color:black">Esta web fue creada utilizando los conocimientos adquiridos en el curso de programación en Python de <a href="https://www.coderhouse.com/">Coderhouse.</a> Con el fin de cumplir con las consignas indicadas.</u></br>
+                                                                  <u  style="color:black">Para su implementación, se utilizó además el framework de <a href="https://www.djangoproject.com/">django</a></u></p>
+                </div>
+            </div>
+        </div>
+    </article>
+     {% endif %}
+<hr style="color:blue"><u></u></hr>
+        
+    </body> 
+
+    
+     
+  
+    
+
+      
+
+       
+
+</html>

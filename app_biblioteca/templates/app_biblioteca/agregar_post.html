@@ -1,0 +1,34 @@
+{% extends 'app_biblioteca/inicio.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1>¡Compartí tus ideas!</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h1>¿En que piensas?</h1>
+<br></br>
+{% if user.is_authenticated %}
+    <div class="form-group">
+    <table>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+        </table>
+            <button class="btn btn-secondary">Postear</button>
+            <a class="btn btn-secondary" href="{% url 'social' %}">Regresar</a>
+    </div>
+
+    <script>
+        var name = '{{ user.id }}';
+        document.getElementById('elder').value
+            = name;
+
+
+    </script>
+{% endif %}
+
+{% endblock %}
+

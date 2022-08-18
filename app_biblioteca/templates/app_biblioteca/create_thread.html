@@ -1,0 +1,41 @@
+
+{% extends 'app_biblioteca/inicio.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block titulo %}
+<h1>Compartí tus Mensajes</h1>
+{% endblock %}
+
+
+{% block contenido_que_cambia %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 p-5">
+			<a href="{% url 'inbox' %}" class="btn btn-light">Vuelve a tu Inbox</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 p-5">
+			<h3>Envia tu mensaje!</h3>
+		</div>
+	</div>
+
+	<div class="row justify-content-center mt-3 mb-5">
+		<div class="col-md-5 col-sm-12">
+			<form method="POST">
+				{% csrf_token %}
+				<p>Introduce el nombre de usuario de la persona con la que te gustaria hablar</p>
+				{{ form | crispy }}
+				<div class="d-grid gap-2">
+					<button class="btn btn-success mt-3" type="submit">Continue</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
