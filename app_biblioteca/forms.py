@@ -52,15 +52,14 @@ class UserEditForm(UserChangeForm):
         fields= ['username','first_name','last_name', 'email', ]
         help_texts= {k:"" for k in fields}
 
-class PasswordChangeForm(PasswordChangeForm):
-    old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control','type':'password'}))
-    new_password1 = forms.CharField(label = "password", widget = forms.PasswordInput(attrs={'class':'form-control','type':'password'}))
-    new_password2 =  forms.CharField(label = "password validador" , widget = forms.PasswordInput(attrs={'class':'form-control','type':'password'}))
+class PasswordChangingForm(PasswordChangeForm):
+    old_password = forms.CharField(label = 'Contraseña Actual',widget=forms.PasswordInput(attrs={'class':'form-control','type':'password'}))
+    new_password1 = forms.CharField(label = "Nueva Contraseña", widget = forms.PasswordInput(attrs={'class':'form-control','type':'password'}))
+    new_password2 =  forms.CharField(label = "Repita la contraseña" , widget = forms.PasswordInput(attrs={'class':'form-control','type':'password'}))
 
     class Meta:
         model = User
-        fields = ["old_password","password1","password2"]
-        help_texts = {k: "" for k in fields}
+        fields = ["old_password","new_password1","new_password2"]
 
 class PostForm(forms.ModelForm):
     class Meta:

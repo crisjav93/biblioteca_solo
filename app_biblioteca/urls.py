@@ -11,6 +11,7 @@ from django.contrib import admin
 urlpatterns = [
 
     path('', inicio, name='inicio'),
+    path('about_us/',about_us, name='about_us'),
     path('perfil', perfil, name='perfil'),
     path('perfil_2', perfil_2, name='perfil_2'),
     path('encargados/', encargados, name='encargados'),
@@ -51,11 +52,9 @@ urlpatterns = [
     #LOGOUT-------------------------------------------------------------------
     path('logout/', LogoutView.as_view(template_name='app_biblioteca/logout.html'), name='logout'),
     path('inicio/', inicio, name='inicio'),
-
     path('editar_perfil/', editar_perfil.as_view(), name='editar_perfil'),
     path('password/', editar_pass, name='editar_pass'),
     #Mensajeria------------------------------------------------------------------
-
 
     path('inbox/', ListThreads.as_view(), name='inbox'),
     path('inbox/create-thread', CreateThread.as_view(), name='create-thread'),

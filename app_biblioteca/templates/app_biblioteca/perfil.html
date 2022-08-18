@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block titulo %}
-<h1><u>Perfil {{ request.user.username }}</u></h1>
+<h1><u>Perfil de: {{ request.user.username }}</u></h1>
 {% endblock %}
 
 
@@ -15,7 +15,13 @@
 
    <img src= "{{ av }}" alt = "imagen de perfil" style="width: 500px; height: 500px; border-radius:50%;" />
 
-
+   <form action="{% url 'editar_perfil' %}" method="POST">{% csrf_token %}
+      {{form.as_p}}
+  
+      <button type="submit">Editar Perfil</button>   
+  
+    </form>
+  
 {% endblock contenido_que_cambia2 %}
 
 {% block editar_perfil %}

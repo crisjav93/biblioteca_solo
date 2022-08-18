@@ -30,15 +30,16 @@
                 <a class="btn btn-primary" href="{% url 'register' %}">Registrarse</a>
                 {% else %}
                 <b><a></a></b>
-                <a class="navbar-brand" href="{% url 'inicio' %}" style="color:blue"><u>¡Hola {{ request.user.username }}!</u></a>
-                <b><a></a></b>
+                <a class="btn btn-primary" href="{% url 'inicio' %}">Inicio</a>
+                <b><a></a></b><b><a></a></b>
+                <b><a></a></b><b><a></a></b>
                 <a class="btn btn-primary" href="{% url 'leer_encargados' %}">Encargados</a>
                 <a class="btn btn-primary" href="{% url 'leer_socios' %}">Socios</a>
                 <a class="btn btn-primary" href="{% url 'leer_libros' %}">Libros </a>
                 <b><a></a></b>
-                <a class="btn btn-success" href="{% url 'perfil' %}">perfil</a> 
+                <a class="btn btn-success" href="{% url 'perfil' %}">Perfil</a> 
                 
-                <b><a></a></b>
+                
                 <a class="btn btn-danger" href="{% url 'logout' %}">Cerrar sesion</a>
                 <b><a></a></b>
                 {% endif %}
@@ -60,7 +61,7 @@
                             {% if not request.user.is_authenticated %}
                             <h1><u>Inicio</u></h1>
                             {% else %}
-                            <h1><u>Bienvenid@</u></h1>
+                            <h1><u>Hola {{ request.user.username }}!</u></h1>
                             {% endif %}
                             {% endblock %}
                              {% block contenido_que_cambia2 %} {% endblock contenido_que_cambia2%}
@@ -76,22 +77,14 @@
         <center><a class="btn btn-primary" href="{% url 'social' %}"><h2>¡Compartí con la comunidad!</h2></a></center>
 
         {% endblock %}
-<br></br>     
-<hr style="color:blue"><u></u></hr>
-        {% if request.user.is_authenticated %}
-    <article class="mb-4">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <p style="border: ridge blue 1px;"><u style="color:black">Mi nombre es Cristian Boto, tengo 24 años, estudio contabilidad, y estoy iniciandome en programación.
-                                                            <br><u style="color:black">Esta web fue creada utilizando los conocimientos adquiridos en el curso de programación en Python de <a href="https://www.coderhouse.com/">Coderhouse.</a> Con el fin de cumplir con las consignas indicadas.</u></br>
-                                                                  <u  style="color:black">Para su implementación, se utilizó además el framework de <a href="https://www.djangoproject.com/">django</a></u></p>
-                </div>
-            </div>
-        </div>
-    </article>
-     {% endif %}
-<hr style="color:blue"><u></u></hr>
+        <br></br>     
+        <hr class="border border-primary border-3 opacity-75">
+                <center><a class="btn btn-primary" href="{% url 'about_us' %}"><h2>Acerca de nosotros</h2></a></center>
+
+        <hr class="border border-primary border-3 opacity-75">
+        </br>
+        </br>
+        </br>
         
     </body> 
 

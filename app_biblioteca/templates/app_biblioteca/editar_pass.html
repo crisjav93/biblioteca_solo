@@ -3,12 +3,12 @@
 {% load static %}
 {% block contenido_que_cambia %}
 
-<h1>Container to  edit user</h1>
-
-<form action="{% url 'editar_pass' %}" method="POST"> {% csrf_token %}
-
-    {{ form.as_p }}
-    <button class="btn btn-secondary"> cambiar contraseña</button>
-    <input type="submit" value="Enviar">
-</form>
+<h1>Cambiar contraseña</h1>
+<div class="form-group">
+    <form method="POST"> 
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-secondary"> cambiar contraseña</button>
+    </form>
+</div>
 {% endblock %}

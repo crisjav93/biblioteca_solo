@@ -17,6 +17,8 @@ from django.contrib.auth.models import User
 
 
 #RENDERIZAD
+def about_us(request):
+    return render(request, 'app_biblioteca/about_us.html')
 
 
 def encargados(request):
@@ -287,19 +289,19 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'app_biblioteca/register.html',{'form':form})
 
-class editar_pass(PasswordChangeForm):
-    form_class = PasswordChangeForm
-    success_url = reverse_lazy('inicio')
+# class editar_pass(PasswordChangeForm):
+#     form_class = PasswordChangingForm
+#     success_url = reverse_lazy('inicio')
 
 @login_required
 def editar_pass(request):
     if request.method == 'POST':
-        form = PasswordChangeForm(user = request.user , data = request.POST)
+        form = PasswordChangingForm(user = request.user , data = request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse('Actualización de usuario')
+            return render(request,"app_biblioteca/inicio.html", {'form':form,'mensaje':f'Contraseña Modificada'})
     else:
-        form = PasswordChangeForm( user = request.user)
+        form = PasswordChangingForm( user = request.user)
     return render(request, 'app_biblioteca/editar_pass.html', {'form':form, 'user':request.user})
 
 #POSTEO
