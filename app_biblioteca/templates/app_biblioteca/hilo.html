@@ -1,0 +1,44 @@
+{% extends 'app_biblioteca/inicio.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1>Compartí tus IDEAS</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h1>¿En que piensas?</h1>
+<br></br>
+{% if user.is_authenticated %}
+<h3>Iniciar Conversación</h3>
+    {% if hilo.receptor == request.user %}
+        {{ hilo.user }}
+    {% else %}
+        {{ hilo.receptor }}
+    {% endif %}
+
+    {% if lista_mensaje.all.count == 0%}
+        <p class="empty-text">No hay mensajes</p>
+    {% endif %}
+{% endif %}
+
+    {% for mensaje in lista_mensaje %}
+        {% if mensaje.emisor == request.user %}
+            <div class="sent-message my-3">
+                <p>{{ mensaje.body }}</p>
+            </div>
+        {% elif mensaje.receptor == request.user %}
+            <div class="received-message my 3">
+                <p>{{ mensaje.body }}</p>
+            </div>
+        {% endif %}
+    {% endfor%}
+
+    <form method="POST" action="{% url 'crear_mensaje' hilo.pk %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-light" type="submit">enviar mensaje</button>
+    </form>
+
+{% endblock %}

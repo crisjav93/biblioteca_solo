@@ -1,0 +1,24 @@
+{% extends 'app_biblioteca/inicio.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<h1>Compartí tus IDEAS</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h1>¿En que piensas?</h1>
+<br></br>
+{% if user.is_authenticated %}
+<h3>Iniciar Conversación</h3>
+        <p>Ingrese el nombre del destinatario</p>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-secondary">Iniciar Conversación</button>
+        </form>
+
+{% endif %}
+
+{% endblock %}
